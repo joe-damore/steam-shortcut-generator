@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "Generate Steam shortcuts from a collection of YAML files",
   "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "build": "yarn clean && yarn tsc",
+    "start": "yarn build && node ."
+  },
   "repository": "git@github.com:joe-damore/steam-shortcut-generator.git",
   "author": "Joe D'Amore <joe@joedamore.me>",
   "license": "MIT",
