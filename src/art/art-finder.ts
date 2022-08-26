@@ -30,7 +30,7 @@ export const allowedArtFileExtensions = [
 export const getArtSearchPathsFromFilepath = (artFilepath: string): string[] => {
   if (extname(artFilepath) === '') {
     return allowedArtFileExtensions.map((extension: string) => {
-      return `${artFilepath}.${extension}`;
+      return `${artFilepath}${extension}`;
     });
   };
   return arrayify(artFilepath)
