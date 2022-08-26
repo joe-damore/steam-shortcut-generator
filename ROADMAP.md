@@ -13,3 +13,4 @@
 ### Nice-to-Haves
 - [ ] Package and publish as executable and library
 - [ ] Load shortcuts and perform other operations asynchronously
+- [ ] Unit tests
