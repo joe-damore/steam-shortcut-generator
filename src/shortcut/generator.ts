@@ -9,6 +9,16 @@ import { findArtFileSync } from '../art/art-finder';
 import { getArtworkPathForShortcut } from '../art/copy-art-file';
 import { extname } from 'path';
 
+/**
+ * Returns a path to where a shortcut's icon file will reside.
+ *
+ * If no applicable icon can be found, '' is returned.
+ *
+ * @param {Shortcut} shortcut - Shortcut for which to get icon path.
+ * @param {string} artDirPath - Directory where icon file should reside.
+ *
+ * @returns {string} Destination filepath for icon file, or ''.
+ */
 const getIconPath = (shortcut: Shortcut, artDirPath: string): string => {
   // If no art dir path is specified, we cannot generate an icon filepath.
   if (!artDirPath) {
