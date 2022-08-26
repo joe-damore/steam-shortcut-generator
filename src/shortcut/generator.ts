@@ -1,3 +1,7 @@
+/**
+ * @file Function to generate VDF data from `Shortcut` instances.
+ */
+
 import { VdfMap, writeVdf } from 'steam-binary-vdf';
 import { Shortcut } from './shortcut';
 import { arrayify, booleanToNumber, arrayToIndexedMap } from '../util';

@@ -1,3 +1,7 @@
+/**
+ * @file Schema and utilities for v1 shortcut files.
+ */
+
 import { JSONSchemaType } from 'ajv';
 import { Shortcut, ShortcutFileInfo } from '../shortcut';
 import { getValueOr, resolveRelativePath } from '../util';

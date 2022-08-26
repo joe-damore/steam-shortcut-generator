@@ -1,3 +1,7 @@
+/**
+ * @file Class to store shortcut data and facilitate ID retrieval.
+ */
+
 import { getShortcutHash, getShortcutUrl } from 'steam-binary-vdf';
 
 /**

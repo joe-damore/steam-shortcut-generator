@@ -1,3 +1,7 @@
+/**
+ * @file Types and functions to get shortcut file information.
+ */
+
 import { basename, dirname, extname, resolve } from 'path';
 
 /**

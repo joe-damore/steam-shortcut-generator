@@ -1,3 +1,7 @@
+/**
+ * @file Utility to get concrete values from nullable or `undefined` values.
+ */
+
 // TODO Add unit tests for `getValueOr<T>()`.
 /**
  * Returns the given value if it is not `null` or `undefined`.

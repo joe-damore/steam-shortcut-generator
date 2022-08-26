@@ -1,3 +1,7 @@
+/**
+ * @file Function to validate data against a given schema.
+ */
+
 import Ajv, { JSONSchemaType } from 'ajv';
 
 /**

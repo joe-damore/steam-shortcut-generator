@@ -1,3 +1,7 @@
+/**
+ * @file Utilities to assist with file path handling.
+ */
+
 import { isAbsolute, resolve } from 'path';
 
 // TODO Add unit tests for `resolveRelativePath()`.

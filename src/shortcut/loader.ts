@@ -1,5 +1,5 @@
 /**
- * Shortcut loader class.
+ * @file Shortcut loader class.
  */
 
 import { lstatSync, readdirSync, readFileSync } from 'fs';
