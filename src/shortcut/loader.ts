@@ -62,7 +62,6 @@ const getDefaultDataSync = (dirpath: string): Object => {
  * Loads shortcuts from files and directories.
  */
 export class ShortcutLoader {
-
   /**
    * Loads a shortcut from a file synchronously.
    *
