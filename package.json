@@ -4,6 +4,7 @@
   "description": "Generate Steam shortcuts from a collection of YAML files",
   "main": "dist/index.js",
   "scripts": {
+    "format": "yarn prettier --write ./src",
     "clean": "rm -rf ./dist",
     "build": "yarn clean && yarn tsc",
     "start": "yarn build && node ."
@@ -14,6 +15,7 @@
   "private": true,
   "devDependencies": {
     "@types/node": "^18.7.13",
+    "prettier": "^2.7.1",
     "typescript": "^4.7.4"
   },
   "dependencies": {
