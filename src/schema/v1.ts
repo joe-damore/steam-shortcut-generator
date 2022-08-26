@@ -1,7 +1,6 @@
 import { JSONSchemaType } from 'ajv';
 import { Shortcut, ShortcutFileInfo } from '../shortcut';
-import { resolveRelativePath } from '../util/path';
-import { getValueOr } from '../util/get-value-or';
+import { getValueOr, resolveRelativePath } from '../util';
 
 /**
  * V1 Steam shortcut files.

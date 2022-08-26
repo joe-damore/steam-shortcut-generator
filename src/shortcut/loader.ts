@@ -6,7 +6,7 @@ import { lstatSync, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import merge from 'ts-deepmerge';
 import { yamlSerializer } from '../serializer/yaml-serializer';
-import { findFileSync } from '../util/find-file';
+import { findFileSync } from '../util';
 import { getShortcutFileInfo } from './file-info';
 import { ShortcutParser } from './parser';
 import { Shortcut } from './shortcut';
