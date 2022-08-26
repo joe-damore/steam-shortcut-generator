@@ -72,6 +72,24 @@ export class ShortcutLoader {
   static loadFromFileSync(filepath: string): Shortcut {
     const fileInfo = getShortcutFileInfo(filepath);
     const defaultObject = getDefaultDataSync(fileInfo.dirpath);
+    return ShortcutLoader.loadFromFileWithDefaultsSync(filepath, defaultObject);
+  }
+
+  /**
+   * Loads a shortcut from a file with a defaults object synchronously.
+   *
+   * The shortcut data at `filepath` will be merged with `defaultObject`.
+   *
+   * @param {string} filepath - Path to shortcut file.
+   * @param {Object} defaultObject - Defaults object with which to merge shortcut data.
+   *
+   * @returns {Shortcut} Loaded `Shortcut` instance.
+   */
+  static loadFromFileWithDefaultsSync(
+    filepath: string,
+    defaultObject: Object,
+  ): Shortcut {
+    const fileInfo = getShortcutFileInfo(filepath);
     const shortcutData = readFileSync(filepath, 'utf8');
     const shortcutObject = yamlSerializer.deserialize(shortcutData);
     const resolvedObject = merge(defaultObject, shortcutObject);
@@ -87,6 +105,7 @@ export class ShortcutLoader {
    */
   static loadFromDirSync(dirpath: string): Shortcut[] {
     const excludedFiles = allowedDefaultFilenames;
+    const defaultData = getDefaultDataSync(dirpath);
 
     return readdirSync(dirpath)
       .filter((dirItem: string) => {
@@ -100,7 +119,7 @@ export class ShortcutLoader {
       })
       .map((dirItem: string) => {
         const resolvedPath = resolve(dirpath, dirItem);
-        return ShortcutLoader.loadFromFileSync(resolvedPath);
+        return ShortcutLoader.loadFromFileWithDefaultsSync(resolvedPath, defaultData);
       });
   }
 
