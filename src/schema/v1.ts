@@ -51,6 +51,23 @@ export interface ShortcutFileV1 {
      * @var {boolean | undefined}
      */
     vr?: boolean;
+
+    /**
+     * Array of tags to assign to shortcut.
+     *
+     * @var {string[] | undefined}
+     */
+    tags?: string[];
+
+    /**
+     * Array of extra tags to assign to shortcut.
+     *
+     * These tags get applied after `tags`.
+     *
+     * This allows shortcuts to specify tags without overwriting those specified
+     * by a `__default` file.
+     */
+    extra_tags?: string[];
   };
 
   /**
@@ -84,6 +101,9 @@ export interface ShortcutFileV1 {
      * Extra command line arguments to apply to shortcut.
      *
      * These arguments get applied after `args` arguments.
+     *
+     * This allows shortcuts to specify args without overwriting those specified
+     * by a `__default` file.
      *
      * @var {string[] | undefined}
      */
@@ -148,6 +168,8 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
         hidden: { type: 'boolean', nullable: true },
         overlay: { type: 'boolean', nullable: true },
         vr: { type: 'boolean', nullable: true },
+        tags: { type: 'array', items: { type: 'string' }, nullable: true },
+        extra_tags: { type: 'array', items: { type: 'string' }, nullable: true },
       },
       required: ['name'],
       additionalProperties: false,
@@ -218,8 +240,19 @@ export const getShortcutFromV1 = (
     ? resolveRelativePath(shortcutFileData.art.background, baseDir)
     : resolveRelativePath(`${baseName}_background`, baseDir);
 
-  shortcut.execArgs = shortcutFileData.exec.args;
-  shortcut.execExtraArgs = shortcutFileData.exec.extra_args;
+  const args = [
+    ...getValueOr(shortcutFileData.exec.args, []),
+    ...getValueOr(shortcutFileData.exec.extra_args, []),
+  ];
+
+  shortcut.execArgs = args;
+
+  const tags = [
+    ...getValueOr(shortcutFileData.info.tags, []),
+    ...getValueOr(shortcutFileData.info.extra_tags, []),
+  ];
+
+  shortcut.tags = tags;
 
   return shortcut;
 };
