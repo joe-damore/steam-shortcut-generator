@@ -14,6 +14,27 @@ export class Shortcut {
   name: string;
 
   /**
+   * Whether or not shortcut is hidden in Steam library.
+   *
+   * @var {boolean}
+   */
+  hidden: boolean;
+
+  /**
+   * Whether or not Steam Overlay is enabled.
+   *
+   * @var {boolean}
+   */
+  overlay: boolean;
+
+  /**
+   * Whether or not shortcut is available from SteamVR.
+   *
+   * @var {boolean}
+   */
+  vr: boolean;
+
+  /**
    * Shortcut execution binary.
    *
    * This is a path to the executable that Steam launches for this shortcut.
@@ -93,6 +114,9 @@ export class Shortcut {
     this.name = name;
     this.execBin = execBin;
     this.execCwd = execCwd;
+    this.hidden = false;
+    this.overlay = true;
+    this.vr = false;
     this.tags = [];
   }
 

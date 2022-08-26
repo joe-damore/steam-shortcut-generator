@@ -1,6 +1,7 @@
 import { JSONSchemaType } from 'ajv';
 import { Shortcut, ShortcutFileInfo } from '../shortcut';
 import { resolveRelativePath } from '../util/path';
+import { getValueOr } from '../util/get-value-or';
 
 /**
  * V1 Steam shortcut files.
@@ -29,6 +30,27 @@ export interface ShortcutFileV1 {
      * @var {string}
      */
     name: string;
+
+    /**
+     * Whether or not shortcut is hidden.
+     *
+     * @var {boolean | undefined}
+     */
+    hidden?: boolean;
+
+    /**
+     * Whether or not Steam Overlay is enabled.
+     *
+     * @var {boolean | undefined}
+     */
+    overlay?: boolean;
+
+    /**
+     * Whether or not shortcut is available from SteamVR.
+     *
+     * @var {boolean | undefined}
+     */
+    vr?: boolean;
   };
 
   /**
@@ -123,6 +145,9 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
       type: 'object',
       properties: {
         name: { type: 'string' },
+        hidden: { type: 'boolean', nullable: true },
+        overlay: { type: 'boolean', nullable: true },
+        vr: { type: 'boolean', nullable: true },
       },
       required: ['name'],
       additionalProperties: false,
@@ -172,6 +197,10 @@ export const getShortcutFromV1 = (
 
   const baseDir = shortcutFileInfo.dirpath;
   const baseName = shortcutFileInfo.basename;
+
+  shortcut.hidden = getValueOr(shortcutFileData.info.hidden, false);
+  shortcut.overlay = getValueOr(shortcutFileData.info.overlay, true);
+  shortcut.vr = getValueOr(shortcutFileData.info.vr, false);
 
   shortcut.artIcon = shortcutFileData?.art?.icon
     ? resolveRelativePath(shortcutFileData.art.icon, baseDir)
