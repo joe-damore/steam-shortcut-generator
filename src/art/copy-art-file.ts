@@ -1,5 +1,9 @@
+import { copyFileSync, mkdirSync } from 'fs';
+import { extname, join, resolve } from 'path';
 import { Shortcut } from '../shortcut';
-import { join } from 'path';
+import { findArtFileSync } from './art-finder';
+
+// TODO Add async version of `copyArtworkForShortcutSync()`.
 
 /**
  * Describes the type of artwork that Steam recognizes.
@@ -33,4 +37,46 @@ export const getArtworkPathForShortcut = (
     case 'background':
       return join(artDirPath, `${shortcut.getAppId()}_hero${extension}`);
   }
+};
+
+/**
+ * Copies applicable artwork files to the artwork directory path for a shortcut.
+ *
+ * @param {Shortcut} shortcut - Shortcut for which to copy art.
+ * @param {string} artDirPath - Path to directory where artwork should be copied.
+ */
+export const copyArtworkForShortcutSync = (
+  shortcut: Shortcut,
+  artDirPath: string,
+) => {
+  // TODO Clean up types in `copyArtworkForShortcutSync()`.
+  const artworkCopyTasks: { art: string | undefined; type: ArtworkType }[] = [
+    { art: shortcut.artIcon, type: 'icon' },
+    { art: shortcut.artLogo, type: 'logo' },
+    { art: shortcut.artGrid, type: 'grid' },
+    { art: shortcut.artBackground, type: 'background' },
+  ];
+
+  artworkCopyTasks.forEach((artworkCopyTask) => {
+    if (artworkCopyTask.art) {
+      const iconSrcPath = findArtFileSync(artworkCopyTask.art);
+      if (iconSrcPath) {
+        try {
+          const extension = extname(iconSrcPath);
+          const iconDestDir = resolve(artDirPath);
+          const iconDestPath = getArtworkPathForShortcut(
+            shortcut,
+            iconDestDir,
+            artworkCopyTask.type,
+            extension,
+          );
+
+          mkdirSync(iconDestDir, { recursive: true });
+          copyFileSync(iconSrcPath, iconDestPath);
+        } catch (e: unknown) {
+          // TODO Handle error more gracefully if mkdir/copy operation fails.
+        }
+      }
+    }
+  });
 };
