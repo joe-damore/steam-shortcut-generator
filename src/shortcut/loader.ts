@@ -119,7 +119,10 @@ export class ShortcutLoader {
       })
       .map((dirItem: string) => {
         const resolvedPath = resolve(dirpath, dirItem);
-        return ShortcutLoader.loadFromFileWithDefaultsSync(resolvedPath, defaultData);
+        return ShortcutLoader.loadFromFileWithDefaultsSync(
+          resolvedPath,
+          defaultData,
+        );
       });
   }
 
