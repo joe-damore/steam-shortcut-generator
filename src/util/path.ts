@@ -1,4 +1,4 @@
-import { resolve, isAbsolute } from 'path';
+import { isAbsolute, resolve } from 'path';
 
 // TODO Add unit tests for `resolveRelativePath()`.
 /**

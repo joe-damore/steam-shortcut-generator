@@ -2,11 +2,11 @@
  * Shortcut loader class.
  */
 
-import merge from 'ts-deepmerge';
+import { lstatSync, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import { readFileSync, readdirSync, lstatSync } from 'fs';
-import { findFileSync } from '../util/find-file';
+import merge from 'ts-deepmerge';
 import { yamlSerializer } from '../serializer/yaml-serializer';
+import { findFileSync } from '../util/find-file';
 import { getShortcutFileInfo } from './file-info';
 import { ShortcutParser } from './parser';
 import { Shortcut } from './shortcut';
