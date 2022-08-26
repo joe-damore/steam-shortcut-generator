@@ -3,7 +3,7 @@
  */
 
 import { lstatSync, readdirSync, readFileSync } from 'fs';
-import { resolve } from 'path';
+import { resolve, extname } from 'path';
 import merge from 'ts-deepmerge';
 import { yamlSerializer } from '../serializer/yaml-serializer';
 import { findFileSync } from '../util';
@@ -108,22 +108,32 @@ export class ShortcutLoader {
     const defaultData = getDefaultDataSync(dirpath);
 
     return readdirSync(dirpath)
-      .filter((dirItem: string) => {
-        // Exclude `__default` files.
+      .reduce((acc: Shortcut[], cur: string) => {
+        const dirItem = cur;
+        // Short circuit if item is a known excluded file.
         if (excludedFiles.includes(dirItem)) {
-          return false;
+          return acc;
         }
-        // Exclude directories.
+        // Short circuit if item does not have an allowed extension.
+        if (!allowedExtensions.includes(extname(dirItem))) {
+          return acc;
+        }
+
+        // Short circuit if item is not a file.
         const stat = lstatSync(resolve(dirpath, dirItem));
-        return stat.isFile();
-      })
-      .map((dirItem: string) => {
+        if (!stat.isFile()) {
+          return acc;
+        }
+
         const resolvedPath = resolve(dirpath, dirItem);
-        return ShortcutLoader.loadFromFileWithDefaultsSync(
+        const shortcut = ShortcutLoader.loadFromFileWithDefaultsSync(
           resolvedPath,
           defaultData,
         );
-      });
+
+        acc.push(shortcut);
+        return acc;
+      }, []);
   }
 
   /**
@@ -139,6 +149,9 @@ export class ShortcutLoader {
 
     for (const dirItem of readdirSync(dirpath)) {
       if (excludedFiles.includes(dirItem)) {
+        continue;
+      }
+      if (!allowedExtensions.includes(extname(dirItem))) {
         continue;
       }
       const resolvedPath = resolve(dirpath, dirItem);
