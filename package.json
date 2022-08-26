@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "ajv": "^8.11.0",
+    "commander": "^9.4.0",
     "steam-binary-vdf": "^0.1.0",
     "ts-deepmerge": "^3.0.0",
     "yaml": "^2.1.1"
