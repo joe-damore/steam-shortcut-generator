@@ -76,6 +76,13 @@ export class Shortcut {
   artBackground: string | undefined;
 
   /**
+   * Tags to apply to Shortcut.
+   *
+   * @var {string[]}
+   */
+  tags: string[];
+
+  /**
    * Constructor.
    *
    * @param {string} name - Shortcut name.
@@ -86,6 +93,7 @@ export class Shortcut {
     this.name = name;
     this.execBin = execBin;
     this.execCwd = execCwd;
+    this.tags = [];
   }
 
   /**
