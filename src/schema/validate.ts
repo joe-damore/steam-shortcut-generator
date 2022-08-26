@@ -28,5 +28,6 @@ export const validateSchema = <T>(
 
   // TODO Create and use a validation-specific error type.
   // TODO Use AJV error objects to show message.
+  console.log(validator.errors);
   throw new Error('Error occurred while validating data');
 };
