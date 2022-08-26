@@ -169,7 +169,11 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
         overlay: { type: 'boolean', nullable: true },
         vr: { type: 'boolean', nullable: true },
         tags: { type: 'array', items: { type: 'string' }, nullable: true },
-        extra_tags: { type: 'array', items: { type: 'string' }, nullable: true },
+        extra_tags: {
+          type: 'array',
+          items: { type: 'string' },
+          nullable: true,
+        },
       },
       required: ['name'],
       additionalProperties: false,
