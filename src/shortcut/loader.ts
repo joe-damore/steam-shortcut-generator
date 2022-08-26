@@ -151,9 +151,6 @@ export class ShortcutLoader {
       if (excludedFiles.includes(dirItem)) {
         continue;
       }
-      if (!allowedExtensions.includes(extname(dirItem))) {
-        continue;
-      }
       const resolvedPath = resolve(dirpath, dirItem);
       const stat = lstatSync(resolvedPath);
       if (stat.isDirectory()) {
@@ -162,7 +159,9 @@ export class ShortcutLoader {
           ...ShortcutLoader.loadFromDirRecursiveSync(resolvedPath),
         ];
       } else {
-        shortcuts.push(ShortcutLoader.loadFromFileSync(resolvedPath));
+        if (allowedExtensions.includes(extname(dirItem))) {
+          shortcuts.push(ShortcutLoader.loadFromFileSync(resolvedPath));
+        }
       }
     }
 
