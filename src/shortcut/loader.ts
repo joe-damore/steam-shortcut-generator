@@ -107,33 +107,32 @@ export class ShortcutLoader {
     const excludedFiles = allowedDefaultFilenames;
     const defaultData = getDefaultDataSync(dirpath);
 
-    return readdirSync(dirpath)
-      .reduce((acc: Shortcut[], cur: string) => {
-        const dirItem = cur;
-        // Short circuit if item is a known excluded file.
-        if (excludedFiles.includes(dirItem)) {
-          return acc;
-        }
-        // Short circuit if item does not have an allowed extension.
-        if (!allowedExtensions.includes(extname(dirItem))) {
-          return acc;
-        }
-
-        // Short circuit if item is not a file.
-        const stat = lstatSync(resolve(dirpath, dirItem));
-        if (!stat.isFile()) {
-          return acc;
-        }
-
-        const resolvedPath = resolve(dirpath, dirItem);
-        const shortcut = ShortcutLoader.loadFromFileWithDefaultsSync(
-          resolvedPath,
-          defaultData,
-        );
-
-        acc.push(shortcut);
+    return readdirSync(dirpath).reduce((acc: Shortcut[], cur: string) => {
+      const dirItem = cur;
+      // Short circuit if item is a known excluded file.
+      if (excludedFiles.includes(dirItem)) {
         return acc;
-      }, []);
+      }
+      // Short circuit if item does not have an allowed extension.
+      if (!allowedExtensions.includes(extname(dirItem))) {
+        return acc;
+      }
+
+      // Short circuit if item is not a file.
+      const stat = lstatSync(resolve(dirpath, dirItem));
+      if (!stat.isFile()) {
+        return acc;
+      }
+
+      const resolvedPath = resolve(dirpath, dirItem);
+      const shortcut = ShortcutLoader.loadFromFileWithDefaultsSync(
+        resolvedPath,
+        defaultData,
+      );
+
+      acc.push(shortcut);
+      return acc;
+    }, []);
   }
 
   /**

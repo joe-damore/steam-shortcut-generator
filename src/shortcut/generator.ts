@@ -18,12 +18,7 @@ const getIconPath = (shortcut: Shortcut, artDirPath: string): string => {
     const artIconPath = findArtFileSync(shortcut.artIcon);
     if (artIconPath) {
       const extension = extname(artIconPath);
-      return getArtworkPathForShortcut(
-        shortcut,
-        artDirPath,
-        'icon',
-        extension,
-      );
+      return getArtworkPathForShortcut(shortcut, artDirPath, 'icon', extension);
     }
   }
   return '';
@@ -43,7 +38,6 @@ export const generateShortcutVdfData = (
 ): Buffer => {
   const shortcuts = arrayify(shortcut);
   const vdfShortcuts = shortcuts.map((item: Shortcut) => {
-
     const iconPath = (() => {
       if (!artDirPath) {
         return '';

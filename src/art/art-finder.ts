@@ -27,13 +27,15 @@ export const allowedArtFileExtensions = [
  *
  * @return {string[]} Array of filepaths that may contain the desired artwork.
  */
-export const getArtSearchPathsFromFilepath = (artFilepath: string): string[] => {
+export const getArtSearchPathsFromFilepath = (
+  artFilepath: string,
+): string[] => {
   if (extname(artFilepath) === '') {
     return allowedArtFileExtensions.map((extension: string) => {
       return `${artFilepath}${extension}`;
     });
-  };
-  return arrayify(artFilepath)
+  }
+  return arrayify(artFilepath);
 };
 
 // TODO Add unit tests for `findArtFileSync()`.

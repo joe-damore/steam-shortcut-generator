@@ -32,5 +32,5 @@ export const getArtworkPathForShortcut = (
 
     case 'background':
       return join(artDirPath, `${shortcut.getAppId()}_hero${extension}`);
-  };
+  }
 };
