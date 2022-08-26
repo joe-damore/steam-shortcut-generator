@@ -5,6 +5,29 @@
 import { VdfMap, writeVdf } from 'steam-binary-vdf';
 import { Shortcut } from './shortcut';
 import { arrayify, booleanToNumber, arrayToIndexedMap } from '../util';
+import { findArtFileSync } from '../art/art-finder';
+import { getArtworkPathForShortcut } from '../art/copy-art-file';
+import { extname } from 'path';
+
+const getIconPath = (shortcut: Shortcut, artDirPath: string): string => {
+  // If no art dir path is specified, we cannot generate an icon filepath.
+  if (!artDirPath) {
+    return '';
+  }
+  if (shortcut.artIcon) {
+    const artIconPath = findArtFileSync(shortcut.artIcon);
+    if (artIconPath) {
+      const extension = extname(artIconPath);
+      return getArtworkPathForShortcut(
+        shortcut,
+        artDirPath,
+        'icon',
+        extension,
+      );
+    }
+  }
+  return '';
+};
 
 // TODO Add unit tests for `generateShortcutVdfData()`.
 /**
@@ -16,16 +39,25 @@ import { arrayify, booleanToNumber, arrayToIndexedMap } from '../util';
  */
 export const generateShortcutVdfData = (
   shortcut: Shortcut | Shortcut[],
+  artDirPath?: string,
 ): Buffer => {
   const shortcuts = arrayify(shortcut);
   const vdfShortcuts = shortcuts.map((item: Shortcut) => {
+
+    const iconPath = (() => {
+      if (!artDirPath) {
+        return '';
+      }
+      return getIconPath(item, artDirPath);
+    })();
+
     return {
       appId: item.getAppId(),
       AppName: item.name,
       Exe: item.execBin,
       StartDir: item.execCwd,
       // TODO Handle VDF `icon` parameter.
-      icon: '',
+      icon: iconPath,
       // TODO Examine whether `ShortcutPath` should be exposed in shortcut file schema.
       ShortcutPath: '',
       LaunchOptions: item.execArgs,
