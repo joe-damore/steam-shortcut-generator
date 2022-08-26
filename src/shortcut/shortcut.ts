@@ -57,16 +57,7 @@ export class Shortcut {
    *
    * @var {string[] | undefined}
    */
-  execArgs: string[] | undefined;
-
-  /**
-   * Shortcut extra command line arguments.
-   *
-   * These arguments are applied after `execArgs`.
-   *
-   * @var {string[] | undefined}
-   */
-  execExtraArgs?: string[] | undefined;
+  execArgs: string[];
 
   /**
    * Path to shortcut icon art.
@@ -114,6 +105,7 @@ export class Shortcut {
     this.name = name;
     this.execBin = execBin;
     this.execCwd = execCwd;
+    this.execArgs = [];
     this.hidden = false;
     this.overlay = true;
     this.vr = false;
