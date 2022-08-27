@@ -164,7 +164,7 @@ export interface ShortcutFileV1 {
      *
      * Paths are relative to the shortcut file.
      */
-    background?: string;
+    hero?: string;
   };
 }
 
@@ -215,7 +215,7 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
         logo: { type: 'string', nullable: true },
         grid: { type: 'string', nullable: true },
         banner: { type: 'string', nullable: true },
-        background: { type: 'string', nullable: true },
+        hero: { type: 'string', nullable: true },
       },
     },
   },
@@ -259,9 +259,9 @@ export const getShortcutFromV1 = (
     ? resolveRelativePath(shortcutFileData.art.banner, baseDir)
     : resolveRelativePath(`${baseName}_banner`, baseDir);
 
-  shortcut.artBackground = shortcutFileData?.art?.background
-    ? resolveRelativePath(shortcutFileData.art.background, baseDir)
-    : resolveRelativePath(`${baseName}_background`, baseDir);
+  shortcut.artHero = shortcutFileData?.art?.hero
+    ? resolveRelativePath(shortcutFileData.art.hero, baseDir)
+    : resolveRelativePath(`${baseName}_hero`, baseDir);
 
   const args = [
     ...getValueOr(shortcutFileData.exec.args, []),

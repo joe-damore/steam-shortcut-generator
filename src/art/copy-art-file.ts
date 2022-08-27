@@ -8,7 +8,7 @@ import { findArtFileSync } from './art-finder';
 /**
  * Describes the type of artwork that Steam recognizes.
  */
-export type ArtworkType = 'grid' | 'logo' | 'background' | 'icon' | 'banner';
+export type ArtworkType = 'grid' | 'logo' | 'hero' | 'icon' | 'banner';
 
 /**
  * Returns the filepath where art for the given shortcut belongs.
@@ -34,7 +34,7 @@ export const getArtworkPathForShortcut = (
     case 'icon':
       return join(artDirPath, `${shortcut.getNewAppId()}_icon${extension}`);
 
-    case 'background':
+    case 'hero':
       return join(artDirPath, `${shortcut.getNewAppId()}_hero${extension}`);
 
     case 'banner':
@@ -57,7 +57,7 @@ export const copyArtworkForShortcutSync = (
     { art: shortcut.artIcon, type: 'icon' },
     { art: shortcut.artLogo, type: 'logo' },
     { art: shortcut.artGrid, type: 'grid' },
-    { art: shortcut.artBackground, type: 'background' },
+    { art: shortcut.artHero, type: 'hero' },
     { art: shortcut.artBanner, type: 'banner' },
   ];
 

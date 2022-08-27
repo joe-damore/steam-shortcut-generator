@@ -89,7 +89,7 @@ export class Shortcut {
    *
    * @var {string | undefined}
    */
-  artBackground: string | undefined;
+  artHero: string | undefined;
 
   /**
    * Path to shortcut banner art.
