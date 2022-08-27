@@ -149,6 +149,17 @@ export interface ShortcutFileV1 {
     grid?: string;
 
     /**
+     * Path to shortcut banner image.
+     *
+     * Banner images are used in Big Picture mode.
+     *
+     * Paths are relative to the shortcut file.
+     *
+     * @var {string | undefined}
+     */
+    banner?: string;
+
+    /**
      * Path to shortcut background image.
      *
      * Paths are relative to the shortcut file.
@@ -203,6 +214,7 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
         icon: { type: 'string', nullable: true },
         logo: { type: 'string', nullable: true },
         grid: { type: 'string', nullable: true },
+        banner: { type: 'string', nullable: true },
         background: { type: 'string', nullable: true },
       },
     },
@@ -242,6 +254,10 @@ export const getShortcutFromV1 = (
   shortcut.artGrid = shortcutFileData?.art?.grid
     ? resolveRelativePath(shortcutFileData.art.grid, baseDir)
     : resolveRelativePath(`${baseName}_grid`, baseDir);
+
+  shortcut.artBanner = shortcutFileData?.art?.banner
+    ? resolveRelativePath(shortcutFileData.art.banner, baseDir)
+    : resolveRelativePath(`${baseName}_banner`, baseDir);
 
   shortcut.artBackground = shortcutFileData?.art?.background
     ? resolveRelativePath(shortcutFileData.art.background, baseDir)

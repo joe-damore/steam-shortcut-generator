@@ -8,7 +8,7 @@ import { findArtFileSync } from './art-finder';
 /**
  * Describes the type of artwork that Steam recognizes.
  */
-export type ArtworkType = 'grid' | 'logo' | 'background' | 'icon';
+export type ArtworkType = 'grid' | 'logo' | 'background' | 'icon' | 'banner';
 
 /**
  * Returns the filepath where art for the given shortcut belongs.
@@ -26,16 +26,19 @@ export const getArtworkPathForShortcut = (
 ): string => {
   switch (artType) {
     case 'grid':
-      return join(artDirPath, `${shortcut.getAppId()}p${extension}`);
+      return join(artDirPath, `${shortcut.getNewAppId()}p${extension}`);
 
     case 'logo':
-      return join(artDirPath, `${shortcut.getAppId()}_logo${extension}`);
+      return join(artDirPath, `${shortcut.getNewAppId()}_logo${extension}`);
 
     case 'icon':
-      return join(artDirPath, `${shortcut.getAppId()}_icon${extension}`);
+      return join(artDirPath, `${shortcut.getNewAppId()}_icon${extension}`);
 
     case 'background':
-      return join(artDirPath, `${shortcut.getAppId()}_hero${extension}`);
+      return join(artDirPath, `${shortcut.getNewAppId()}_hero${extension}`);
+
+    case 'banner':
+      return join(artDirPath, `${shortcut.getAppId()}${extension}`);
   }
 };
 
@@ -55,6 +58,7 @@ export const copyArtworkForShortcutSync = (
     { art: shortcut.artLogo, type: 'logo' },
     { art: shortcut.artGrid, type: 'grid' },
     { art: shortcut.artBackground, type: 'background' },
+    { art: shortcut.artBanner, type: 'banner' },
   ];
 
   artworkCopyTasks.forEach((artworkCopyTask) => {

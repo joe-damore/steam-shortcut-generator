@@ -92,6 +92,13 @@ export class Shortcut {
   artBackground: string | undefined;
 
   /**
+   * Path to shortcut banner art.
+   *
+   * @var {string | undefined }
+   */
+  artBanner: string | undefined;
+
+  /**
    * Tags to apply to Shortcut.
    *
    * @var {string[]}
@@ -119,7 +126,8 @@ export class Shortcut {
   /**
    * Returns the app ID for this shortcut.
    *
-   * This ID is used to generate the shortcut launch URL and artwork filenames.
+   * This ID is used to generate the shortcut launch URL and artwork filenames
+   * for Big Picture banners.
    *
    * @returns {string} Steam shortcut app ID.
    */
