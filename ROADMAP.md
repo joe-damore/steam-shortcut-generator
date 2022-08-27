@@ -4,9 +4,9 @@
 
 ### Requirements
 - [ ] Freeze `v1` schema for shortcut files
-- [ ] Load shortcut files from a file, directory, or recursively from a directory
-- [ ] Generate `shortcuts.vdf` file
-- [ ] Copy Steam shortcut artwork for library
+- [x] Load shortcut files from a file, directory, or recursively from a directory
+- [x] Generate `shortcuts.vdf` file
+- [x] Copy Steam shortcut artwork for library
 - [ ] Update Steam library collections using shortcut tags
 - [ ] Package and publish as executable
 
