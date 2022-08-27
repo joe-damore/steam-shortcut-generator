@@ -64,7 +64,7 @@ export const generateShortcutVdfData = (
       icon: iconPath,
       // TODO Examine whether `ShortcutPath` should be exposed in shortcut file schema.
       ShortcutPath: '',
-      LaunchOptions: item.execArgs,
+      LaunchOptions: item.execArgs.join(' '),
       IsHidden: booleanToNumber(item.hidden),
       // TODO Examine whehter `AllowDesktopConfig` should be exposed in shortcut file schema.
       AllowDesktopConfig: 1,
