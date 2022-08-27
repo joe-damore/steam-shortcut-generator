@@ -2,7 +2,7 @@
  * @file Class to store shortcut data and facilitate ID retrieval.
  */
 
-import { getShortcutHash, getShortcutUrl } from 'steam-binary-vdf';
+import { crc32 } from 'crc';
 
 /**
  * Stores loaded and parsed Steam shortcut data.
@@ -132,7 +132,28 @@ export class Shortcut {
    * @returns {string} Steam shortcut app ID.
    */
   getAppId(): string {
-    return getShortcutHash(`${this.execBin}${this.name}`);
+    //return getShortcutHash(`${this.execBin}${this.name}`);
+    const key = this.execBin + this.name;
+    const top = BigInt(crc32(key)) | BigInt(0x80000000);
+    return String((BigInt(top) << BigInt(32) | BigInt(0x02000000)));
+  }
+
+  /**
+   * Returns the new app ID for this shortcut.
+   *
+   * The new app ID is used by the Steam desktop library and Steam OS 3 artwork
+   * filenames.
+   *
+   * @returns {string} Steam shortcut new app ID.
+   */
+  getNewAppId(): string {
+    const exe = this.execBin;
+    const name = this.name;
+    const key = exe + name;
+    const top = BigInt(crc32(key)) | BigInt(0x80000000);
+    const shift = (BigInt(top) << BigInt(32) | BigInt(0x02000000)) >> BigInt(32);
+
+    return String(shift);
   }
 
   /**
@@ -141,6 +162,6 @@ export class Shortcut {
    * @returns {string} Steam shortcut launch URL.
    */
   getLaunchUrl(): string {
-    return getShortcutUrl(this.name, this.execBin);
+    return `steam://rungameid/${this.getAppId()}`;
   }
 }
