@@ -59,35 +59,35 @@ export class Shortcut {
   /**
    * Shortcut command line arguments.
    *
-   * @var {string[] | undefined}
+   * @var {string[]}
    */
   execArgs: string[];
 
   /**
    * Path to shortcut icon art.
    *
-   * @var {string[] | undefined}
+   * @var {string | undefined}
    */
   artIcon: string | undefined;
 
   /**
    * Path to shortcut logo art.
    *
-   * @var {string[] | undefined}
+   * @var {string | undefined}
    */
   artLogo: string | undefined;
 
   /**
    * Path to shortcut grid art.
    *
-   * @var {string[] | undefined}
+   * @var {string | undefined}
    */
   artGrid: string | undefined;
 
   /**
    * Path to shortcut background art.
    *
-   * @var {string[] | undefined}
+   * @var {string | undefined}
    */
   artBackground: string | undefined;
 
