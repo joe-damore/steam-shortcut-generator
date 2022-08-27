@@ -56,7 +56,7 @@ export const generateShortcutVdfData = (
     })();
 
     return {
-      appId: item.getAppId(),
+      appid: Number(item.getNewAppId()),
       AppName: item.name,
       Exe: item.execBin,
       StartDir: item.execCwd,
