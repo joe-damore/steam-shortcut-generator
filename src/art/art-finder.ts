@@ -13,6 +13,8 @@ export const allowedArtFileExtensions = [
   '.PNG',
   '.JPG',
   '.JPEG',
+  '.ico',
+  '.ICO',
 ];
 
 // TODO Add unit tests for `getArtSearchPathsFromFilepath()`.
