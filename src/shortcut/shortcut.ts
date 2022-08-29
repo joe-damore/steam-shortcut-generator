@@ -99,11 +99,11 @@ export class Shortcut {
   artBanner: string | undefined;
 
   /**
-   * Tags to apply to Shortcut.
+   * Categories to apply to Shortcut.
    *
    * @var {string[]}
    */
-  tags: string[];
+  categories: string[];
 
   /**
    * Constructor.
@@ -120,7 +120,7 @@ export class Shortcut {
     this.hidden = false;
     this.overlay = true;
     this.vr = false;
-    this.tags = [];
+    this.categories = [];
   }
 
   /**
@@ -135,7 +135,7 @@ export class Shortcut {
     //return getShortcutHash(`${this.execBin}${this.name}`);
     const key = this.execBin + this.name;
     const top = BigInt(crc32(key)) | BigInt(0x80000000);
-    return String((BigInt(top) << BigInt(32) | BigInt(0x02000000)));
+    return String((BigInt(top) << BigInt(32)) | BigInt(0x02000000));
   }
 
   /**
@@ -151,7 +151,8 @@ export class Shortcut {
     const name = this.name;
     const key = exe + name;
     const top = BigInt(crc32(key)) | BigInt(0x80000000);
-    const shift = (BigInt(top) << BigInt(32) | BigInt(0x02000000)) >> BigInt(32);
+    const shift =
+      ((BigInt(top) << BigInt(32)) | BigInt(0x02000000)) >> BigInt(32);
 
     return String(shift);
   }

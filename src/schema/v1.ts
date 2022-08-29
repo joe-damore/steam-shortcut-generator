@@ -56,21 +56,21 @@ export interface ShortcutFileV1 {
     vr?: boolean;
 
     /**
-     * Array of tags to assign to shortcut.
+     * Array of categories to assign to shortcut.
      *
      * @var {string[] | undefined}
      */
-    tags?: string[];
+    categories?: string[];
 
     /**
-     * Array of extra tags to assign to shortcut.
+     * Array of extra categories to assign to shortcut.
      *
-     * These tags get applied after `tags`.
+     * These categories get applied after `categories`.
      *
-     * This allows shortcuts to specify tags without overwriting those specified
-     * by a `__default` file.
+     * This allows shortcuts to specify categories without overwriting those
+     * specified by a `__default` file.
      */
-    extra_tags?: string[];
+    extra_categories?: string[];
   };
 
   /**
@@ -182,8 +182,12 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
         hidden: { type: 'boolean', nullable: true },
         overlay: { type: 'boolean', nullable: true },
         vr: { type: 'boolean', nullable: true },
-        tags: { type: 'array', items: { type: 'string' }, nullable: true },
-        extra_tags: {
+        categories: {
+          type: 'array',
+          items: { type: 'string' },
+          nullable: true,
+        },
+        extra_categories: {
           type: 'array',
           items: { type: 'string' },
           nullable: true,
@@ -270,12 +274,12 @@ export const getShortcutFromV1 = (
 
   shortcut.execArgs = args;
 
-  const tags = [
-    ...getValueOr(shortcutFileData.info.tags, []),
-    ...getValueOr(shortcutFileData.info.extra_tags, []),
+  const categories = [
+    ...getValueOr(shortcutFileData.info.categories, []),
+    ...getValueOr(shortcutFileData.info.extra_categories, []),
   ];
 
-  shortcut.tags = tags;
+  shortcut.categories = categories;
 
   return shortcut;
 };

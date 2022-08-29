@@ -78,7 +78,7 @@ export const generateShortcutVdfData = (
       // TODO Examine whether to expose `FlatpakAppID` to schema.
       FlatpakAppID: '',
       // TODO Tags.
-      tags: arrayToIndexedMap(item.tags.sort()),
+      tags: arrayToIndexedMap(item.categories.sort()),
     };
   });
 
