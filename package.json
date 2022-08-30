@@ -24,6 +24,7 @@
     "ajv": "^8.11.0",
     "commander": "^9.4.0",
     "crc": "^4.1.1",
+    "iconv-lite": "^0.6.3",
     "level": "^8.0.0",
     "steam-binary-vdf": "^0.1.0",
     "ts-deepmerge": "^3.0.0",
