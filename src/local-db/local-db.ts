@@ -15,8 +15,15 @@ import iconv from 'iconv-lite';
  * @returns {any} Decoded database value.
  */
 const decodeDbValue = (dbString: string): any => {
-  // TODO Consider defining and using error type if Steam LevelDB is malformed.
-  return JSON.parse(dbString.slice(1));
+
+  const transformed = dbString.substring(0,2) === '01' || '00'
+    ? (dbString.slice(2).match(/.{1,2}/g) || []).join('00').concat('00')
+    : dbString.slice(2);
+
+  const buffer = Buffer.from(transformed,'hex');
+  const decoded = iconv.decode(buffer,'utf16le');
+
+  return JSON.parse(decoded);
 };
 
 // TODO Add unit tests for `encodeDbValue()`.
@@ -28,9 +35,9 @@ const decodeDbValue = (dbString: string): any => {
  * @returns {string} Encoded database value.
  */
 const encodeDbValue = (entry: any): string => {
-  // TODO Consider defining and using error if entries are malformed.
   const stringData = JSON.stringify(entry);
-  return `00${iconv.encode(stringData, 'utf16le').toString('hex')}`;
+  const encodedData = `${iconv.encode(stringData, 'utf16le').toString('hex')}`;
+  return encodedData;
 };
 
 /**
@@ -174,7 +181,7 @@ export class SteamLocalDb {
     const namespaceData = await this.db.get(`${this.prefix}s`, {
       valueEncoding: 'utf-8',
     });
-    const namespaceValues = decodeDbValue(namespaceData);
+    const namespaceValues = JSON.parse(namespaceData.slice(1));
     return namespaceValues.map((namespaceValue: any) => {
       return `${this.prefix}-${namespaceValue[0]}`;
     });
@@ -266,8 +273,13 @@ export class SteamLocalDb {
     namespaceKey: string,
   ): Promise<SteamLocalDbEntry[]> {
     const entryData = await this.db.get(namespaceKey, {
-      valueEncoding: 'utf-8',
+      valueEncoding: 'hex',
     });
+
+    if (['00', '01'].indexOf(entryData.substring(0, 2)) < 0) {
+      throw new Error('Illegal byte order marker');
+    }
+
     const entriesRaw = decodeDbValue(entryData);
 
     return entriesRaw.map((entry: any[]): SteamLocalDbEntry => {
