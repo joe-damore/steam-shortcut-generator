@@ -37,7 +37,6 @@ const encodeDbValue = (entry: any): string => {
  * Describes a raw Steam LevelDB value.
  */
 interface rawDbEntry {
-
   /**
    * Determines whether or not the database entry is "deleted".
    *
@@ -83,7 +82,6 @@ interface rawDbEntry {
  * Describes a Steam LevelDB database entry.
  */
 export interface SteamLocalDbEntry {
-
   /**
    * Determines whether or not the database entry is "deleted".
    *
