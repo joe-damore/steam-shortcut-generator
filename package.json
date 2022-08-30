@@ -9,7 +9,7 @@
     "clean": "rm -rf ./dist",
     "build": "yarn clean && yarn tsc",
     "start": "yarn build && node .",
-    "package": "yarn build && yarn pkg dist/index.js --targets node16-linux-x64 --out-path ./app"
+    "package": "yarn build && yarn pkg -c ./package.json --targets node16-linux-x64 --out-path ./app --out steam-shortcut-generator --compress Brotli ./dist/index.js"
   },
   "repository": "git@github.com:joe-damore/steam-shortcut-generator.git",
   "author": "Joe D'Amore <joe@joedamore.me>",
@@ -31,5 +31,12 @@
     "steam-binary-vdf": "^0.1.0",
     "ts-deepmerge": "^3.0.0",
     "yaml": "^2.1.1"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/node-gyp-build/**/*",
+      "node_modules/level/**/*",
+      "node_modules/classic-level/**/*"
+    ]
   }
 }
