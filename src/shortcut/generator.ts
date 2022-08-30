@@ -66,7 +66,7 @@ export const generateShortcutVdfData = (
       ShortcutPath: '',
       LaunchOptions: item.execArgs.join(' '),
       IsHidden: booleanToNumber(item.hidden),
-      // TODO Examine whehter `AllowDesktopConfig` should be exposed in shortcut file schema.
+      // TODO Examine whether `AllowDesktopConfig` should be exposed in shortcut file schema.
       AllowDesktopConfig: 1,
       OpenVR: booleanToNumber(item.vr),
       // TODO Examine whether to expose `Devkit`, `DevkitGameID`, and `DevkitOverrideAppID`.
@@ -77,7 +77,6 @@ export const generateShortcutVdfData = (
       LastPlayTime: 0,
       // TODO Examine whether to expose `FlatpakAppID` to schema.
       FlatpakAppID: '',
-      // TODO Tags.
       tags: arrayToIndexedMap(item.categories.sort()),
     };
   });
