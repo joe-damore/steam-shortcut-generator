@@ -2,12 +2,45 @@
  * @file Types, functions, and constants related to Steam category management.
  */
 
+import { Shortcut } from '../shortcut';
+
 /**
  * The prefix used to find collections among other Steam DB entries.
  *
  * @var {string}
  */
 export const steamCollectionPrefix = 'user-collections.';
+
+// TODO Document `getAllCategoryNamesFromShortcuts()`.
+// TODO Add unit tests for `getAllCategoryNamesFromShortcuts()`.
+// TODO Rename `getAllCategoryNamesFromShortcuts()` to something more concise.
+export const getAllCategoryNamesFromShortcuts = (
+  shortcuts: Shortcut[],
+): string[] => {
+  return shortcuts.reduce((acc: string[], shortcut: Shortcut) => {
+    shortcut.categories.forEach((category: string) => {
+      if (!acc.includes(category)) {
+        acc.push(category);
+      }
+    });
+    return acc;
+  }, []);
+};
+
+// TODO Document `getAllShortcutGameIdsForCategory()`.
+// TODO Add unit tests for `getAllShortcutGameIdsForCategory()`.
+// TODO Rename `getAllShortcutGameIdsForCategory()` to something more concise.
+export const getAllShortcutGameIdsForCategory = (
+  shortcuts: Shortcut[],
+  categoryName: string,
+): number[] => {
+  return shortcuts.reduce((acc: number[], shortcut: Shortcut) => {
+    if (shortcut.categories.includes(categoryName)) {
+      acc.push(Number(shortcut.getNewAppId()));
+    }
+    return acc;
+  }, []);
+};
 
 /**
  * Returns a collection ID slug for the given category name.
