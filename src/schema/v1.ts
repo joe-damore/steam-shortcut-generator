@@ -223,6 +223,7 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
       },
     },
   },
+  additionalProperties: false,
   required: ['info', 'exec'],
 };
 
