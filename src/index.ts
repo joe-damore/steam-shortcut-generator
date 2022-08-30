@@ -72,6 +72,7 @@ const main = async () => {
     // TODO Show error message.
     console.log(e);
     console.error('An error has occurred. Good bye. :/');
+    process.exit(1);
   }
 };
 
