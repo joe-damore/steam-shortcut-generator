@@ -96,9 +96,9 @@ export interface ShortcutFileV1 {
     /**
      * Command line arguments to apply to shortcut.
      *
-     * @var {string[] | undefined}
+     * @var {(string | number)[] | undefined}
      */
-    args?: string[];
+    args?: (string | number)[];
 
     /**
      * Extra command line arguments to apply to shortcut.
@@ -110,7 +110,7 @@ export interface ShortcutFileV1 {
      *
      * @var {string[] | undefined}
      */
-    extra_args?: string[];
+    extra_args?: (string | number)[];
   };
 
   /**
@@ -201,10 +201,10 @@ export const ShortcutFileSchemaV1: JSONSchemaType<ShortcutFileV1> = {
       properties: {
         cwd: { type: 'string' },
         bin: { type: 'string' },
-        args: { type: 'array', items: { type: 'string' }, nullable: true },
+        args: { type: 'array', items: { type: [ 'integer', 'string' ] }, nullable: true },
         extra_args: {
           type: 'array',
-          items: { type: 'string' },
+          items: { type: [ 'integer', 'string' ] },
           nullable: true,
         },
       },
@@ -271,7 +271,12 @@ export const getShortcutFromV1 = (
   const args = [
     ...getValueOr(shortcutFileData.exec.args, []),
     ...getValueOr(shortcutFileData.exec.extra_args, []),
-  ];
+  ].map((arg: string | number): string => {
+    if (typeof arg === 'string') {
+      return arg;
+    }
+    return `${arg}`;
+  });
 
   shortcut.execArgs = args;
 
