@@ -89,10 +89,12 @@ export class ShortcutLoader {
     filepath: string,
     defaultObject: Object,
   ): Shortcut {
+    const mergeOptions = { mergeArrays: false };
     const fileInfo = getShortcutFileInfo(filepath);
     const shortcutData = readFileSync(filepath, 'utf8');
     const shortcutObject = yamlSerializer.deserialize(shortcutData);
-    const resolvedObject = merge(defaultObject, shortcutObject);
+    const resolvedObject = merge.withOptions(mergeOptions, defaultObject, shortcutObject);
+
     return ShortcutParser.fromObject(resolvedObject, fileInfo);
   }
 
