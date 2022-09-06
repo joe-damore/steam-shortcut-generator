@@ -3,12 +3,14 @@
  */
 
 import Ajv, { JSONSchemaType } from 'ajv';
+import { ShortcutFileInfo } from '../shortcut/file-info';
 
 /**
  * Validates an object against a schema of a given type.
  *
  * @param {Object} object - Object to validate.
  * @param {JSONSchemaType<T>} schema - Schema against which to validate `object`.
+ * @param {ShortcutFileInfo | undefined} fileInfo - Optional file info to include in error messages.
  *
  * @throws {Error} Throws if `data` cannot be validated against type `T`.
  *
@@ -17,6 +19,7 @@ import Ajv, { JSONSchemaType } from 'ajv';
 export const validateSchema = <T>(
   object: Object,
   schema: JSONSchemaType<T>,
+  fileInfo?: ShortcutFileInfo,
 ): T => {
   const ajv = new Ajv();
   const validator = ajv.compile<T>(schema);
@@ -29,5 +32,12 @@ export const validateSchema = <T>(
   // TODO Create and use a validation-specific error type.
   // TODO Use AJV error objects to show message.
   console.log(validator.errors);
-  throw new Error('Error occurred while validating data');
+  const message = (() => {
+    if (!fileInfo) {
+      return 'An error occurred while validating shortcut data';
+    }
+    return `An error occurred while validating shortcut data for '${fileInfo.filename}'`;
+  })();
+  console.error(message);
+  throw new Error(message);
 };

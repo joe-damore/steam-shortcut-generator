@@ -40,7 +40,7 @@ export class ShortcutParser {
     switch (schema) {
       case 1:
       case undefined:
-        validateSchema<ShortcutFileV1>(shortcutObject, ShortcutFileSchemaV1);
+        validateSchema<ShortcutFileV1>(shortcutObject, ShortcutFileSchemaV1, fileInfo);
         return getShortcutFromV1(shortcutObject, fileInfo);
 
       default:
