@@ -18,14 +18,17 @@ program
   .argument('<src>', 'file or directory from which to generate shortcuts')
   .argument('<dest>', 'output file path for generated shortcuts VDF file')
   .option('-a, --art <path>', 'path to output shortcuts artwork')
-  .option('-l, --leveldb <path>', 'path to Steam library LevelDB');
+  .option('-l, --leveldb <path>', 'path to Steam library LevelDB')
+  .option('-u, --userid <uid>', 'Steam user ID');
 
 program.parse();
 
 const main = async () => {
-  const { art, leveldb } = program.opts();
+  const { art, leveldb, userid } = program.opts();
   const src = program.args[0];
   const dest = program.args[1];
+
+  const useridNum = !!userid ? parseInt(userid, 10) : 65000521;
 
   try {
     const srcStat = lstatSync(src);
@@ -48,7 +51,7 @@ const main = async () => {
 
     if (leveldb) {
       try {
-        const categoryManager = new CategoryManager(leveldb, 65000521);
+        const categoryManager = new CategoryManager(leveldb, useridNum);
         const categories = await categoryManager.getCategories();
 
         const categoryNames = getAllCategoryNamesFromShortcuts(srcShortcuts);
